@@ -7,25 +7,14 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNot.not;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import java.util.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-public class Test1Test {
-  private WebDriver driver;
+import java.util.concurrent.TimeUnit;
+
+public class Test1TestOld {
+  private ChromeDriver driver;
   private Map<String, Object> vars;
   JavascriptExecutor js;
   @Before
@@ -46,12 +35,13 @@ public class Test1Test {
     // 1 | open | / | 
     driver.get("https://www.google.com.ua/");
     // 2 | setWindowSize | 1000x600 | 
-    // driver.manage().window().setSize(new Dimension(1000, 600));
+    //driver.manage().window().setSize(new Dimension(1000, 600));
     // 3 | type | name=q | qa course
     driver.findElement(By.name("q")).sendKeys("qa course");
     // 4 | sendKeys | name=q | ${KEY_ENTER}
     driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
     // 5 | assertText | css=.g:nth-child(2) .LC20lb | изучайте Quality Assurance онлайн | Coursera
-    assertThat(driver.findElement(By.xpath("/html/body/div[7]/div/div[10]/div[1]/div[2]/div[2]/div/div/div[6]/div/div[1]/div/a/h3")).getText(), is("изучайте Quality Assurance онлайн | Coursera"));
+    driver.manage().timeouts().implicitlyWait(10000, TimeUnit.SECONDS);
+    assertThat(driver.findElement(By.partialLinkText("Top Quality Assurance Courses Online - Updated [May 2022]")).getText(), is("Top Quality Assurance Courses Online - Updated [May 2022]"));
   }
 }
